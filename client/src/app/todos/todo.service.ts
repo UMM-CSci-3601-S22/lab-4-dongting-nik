@@ -2,7 +2,8 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { Todo } from './todo-list/todo';
+import { Todo, TodoStatus } from './todo-list/todo';
+import { map } from 'rxjs/operators';
 
 /**
  * Service that provides the interface for getting information
@@ -40,7 +41,7 @@ export class TodoService {
    *  from the server after a possibly substantial delay (because we're
    *  contacting a remote server over the Internet).
    */
-  getTodos(filters?: { status?: boolean; bodyText?: string; sort?: string }): Observable<Todo[]> {
+  getTodos(filters?: { status?: boolean; owner?: string }): Observable<Todo[]> {
     // `HttpParams` is essentially just a map used to hold key-value
     // pairs that are then encoded as "?key1=value1&key2=value2&…" in
     // the URL when we make the call to `.get()` below.
@@ -49,11 +50,8 @@ export class TodoService {
       if (filters.status) {
         httpParams = httpParams.set('status', filters.status);
       }
-      if (filters.bodyText) {
-        httpParams = httpParams.set('contains', filters.bodyText);
-      }
-      if(filters.sort){
-        httpParams = httpParams.set('orderBy', filters.sort);
+      if (filters.owner) {
+        httpParams = httpParams.set('owner', filters.owner);
       }
     }
     // Send the HTTP GET request with the given URL and parameters.
@@ -74,7 +72,7 @@ export class TodoService {
   }
 
   /**
-   * A service method that filters an array of `User` using
+   * A service method that filters an array of `Todo` using
    * the specified filters.
    *
    * Note that the filters here support partial matches. Since the
@@ -82,26 +80,21 @@ export class TodoService {
    * partial matches instead of waiting until we have a full string
    * to match against.
    *
-   * @param todos the array of `Users` that we're filtering
+   * @param todos the array of `Todos` that we're filtering
    * @param filters the map of key-value pairs used for the filtering
-   * @returns an array of `Users` matching the given filters
+   * @returns an array of `Todos` matching the given filters
    */
-  filterTodos(todos: Todo[], filters: { owner?: string; category?: string; limit?: number }): Todo[] {
+  filterTodos(todos: Todo[], filters: { body?: string; category?: string }): Todo[] {
     let filteredTodos = todos;
 
-    if (filters.owner) {
-      filters.owner = filters.owner.toLowerCase();
-      filteredTodos = filteredTodos.filter(todo => todo.owner.toLowerCase().indexOf(filters.owner) !== -1);
+    if (filters.body) {
+      filters.body = filters.body.toLowerCase();
+      filteredTodos = filteredTodos.filter(todo => todo.body.toLowerCase().indexOf(filters.body) !== -1);
     }
 
     if (filters.category) {
       filters.category = filters.category.toLowerCase();
       filteredTodos = filteredTodos.filter(todo => todo.category.toLowerCase().indexOf(filters.category) !== -1);
-    }
-
-    if (filters.limit) {
-      filteredTodos = filteredTodos.slice(0, filters.limit);
-
     }
 
     return filteredTodos;

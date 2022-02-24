@@ -25,12 +25,11 @@ import io.javalin.http.BadRequestResponse;
 import io.javalin.http.Context;
 import io.javalin.http.HttpCode;
 import io.javalin.http.NotFoundResponse;
-import umm3601.todos.Todos;
 
 /**
  * Controller that manages requests for info about todos.
  */
-public class TodosController {
+public class TodoController {
 
   private static final String OWNER_KEY = "owner";
   private static final String STATUS_KEY  = "status";
@@ -39,15 +38,15 @@ public class TodosController {
 
   public static final String EMAIL_REGEX = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$";
 
-  private final JacksonMongoCollection<Todos> todosCollection;
+  private final JacksonMongoCollection<Todo> todosCollection;
 
   /**
    * Construct a controller for todos.
    *
    * @param database the database containing todos data
    */
-  public TodosController(MongoDatabase database) {
-    todosCollection = JacksonMongoCollection.builder().build(database, "todos", Todos.class);
+  public TodoController(MongoDatabase database) {
+    todosCollection = JacksonMongoCollection.builder().build(database, "todos", Todo.class);
   }
 
   /**
@@ -57,7 +56,7 @@ public class TodosController {
    */
   public void getTodo(Context ctx) {
     String id = ctx.pathParam("id");
-    Todos todos;
+    Todo todos;
 
     try {
       todos = todosCollection.find(eq("_id", new ObjectId(id))).first();
@@ -76,7 +75,7 @@ public class TodosController {
    *
    * @param ctx a Javalin HTTP context
    */
-  public void deleteTodos(Context ctx) {
+  public void deleteTodo(Context ctx) {
     String id = ctx.pathParam("id");
     todosCollection.deleteOne(eq("_id", new ObjectId(id)));
   }
@@ -114,8 +113,8 @@ public class TodosController {
    *
    * @param ctx a Javalin HTTP context
    */
-  public void addNewTodos(Context ctx) {
-    Todos newTodos = ctx.bodyValidator(Todos.class)
+  public void addNewTodo(Context ctx) {
+    Todo newTodos = ctx.bodyValidator(Todo.class)
        // Verify that the todos has a owner that is not blank
       .check(usr -> usr.owner != null && usr.owner.length() > 0, "Todos must have a non-empty owner")
       // Verify that the todo have a body that is not blank

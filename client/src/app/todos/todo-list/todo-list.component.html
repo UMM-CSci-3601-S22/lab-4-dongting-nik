@@ -5,33 +5,17 @@
       <mat-card-title class="todo-list-title">Todos</mat-card-title>
       <mat-card-content fxLayout="column" >
 
-        <div fxLayout="row wrap" fxLayoutGap="10px">
-          <!-- Examples of filtering in Angular -->
 
-          <mat-form-field class="input-field">
-            <mat-label>Owner</mat-label>
-            <input matInput id="todo-owner-input" placeholder="Filter by Owner"
-            [(ngModel)]="todoOwner" (input)="updateFilter()">
-            <mat-hint>Filtered on client</mat-hint>
-          </mat-form-field>
-
-          <mat-form-field class="input-field">
-            <mat-label>Category</mat-label>
-            <input matInput id="todo-category-input" placeholder="Filter by Category"
-            [(ngModel)]="todoCategory" (input)="updateFilter()">
-            <mat-hint>Filtered on client</mat-hint>
-          </mat-form-field>
-
-          <mat-form-field class="input-field">
-            <mat-label>Limit</mat-label>
-            <input matInput id="todo-limit-input" placeholder="Limit"
-            [(ngModel)]="todoLimit" (input)="updateFilter()">
-            <mat-hint>Filtered on client</mat-hint>
-          </mat-form-field>
-        </div>
 
         <div fxLayout="row wrap" fxLayoutGap="10px">
           <!-- Examples of filtering on the server -->
+
+          <mat-form-field class="input-field">
+            <mat-label>Owner</mat-label>
+            <input matInput id="todo-owner-text-input" placeholder="Filter by Owner"
+            [(ngModel)]="todoOwner" (input)="getTodosFromServer()">
+            <mat-hint>Filtered on server</mat-hint>
+          </mat-form-field>
 
           <mat-form-field class="input-field">
             <mat-label>Status</mat-label>
@@ -42,24 +26,24 @@
           </mat-select>
           <mat-hint>Filtered on server</mat-hint>
         </mat-form-field>
+      </div>
 
-          <mat-form-field class="input-field">
-            <mat-label>Body</mat-label>
-            <input matInput id="todo-body-text-input" placeholder="Filter by Body"
-            [(ngModel)]="todoBodyText" (input)="getTodosFromServer()">
-            <mat-hint>Filtered on server</mat-hint>
-          </mat-form-field>
 
-          <mat-form-field class="input-field">
-            <mat-label>Sort By</mat-label>
-            <mat-select (selectionChange)="getTodosFromServer()" [(ngModel)]="todoSort" data-test="todoSortSelect">
-              <mat-option>--</mat-option>
-              <mat-option value="body">Body</mat-option>
-              <mat-option value="status">Status</mat-option>
-              <mat-option value="category">Category</mat-option>
-              <mat-option value="owner">Owner</mat-option>
-          </mat-select>
-          <mat-hint>Filtered on server</mat-hint>
+      <div fxLayout="row wrap" fxLayoutGap="10px">
+        <!-- Examples of filtering in Angular -->
+
+        <mat-form-field class="input-field">
+          <mat-label>Body</mat-label>
+          <input matInput id="todo-body-input" placeholder="Filter by Body"
+          [(ngModel)]="todoBody" (input)="updateFilter()">
+          <mat-hint>Filtered on client</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field class="input-field">
+          <mat-label>Category</mat-label>
+          <input matInput id="todo-category-input" placeholder="Filter by Category"
+          [(ngModel)]="todoCategory" (input)="updateFilter()">
+          <mat-hint>Filtered on client</mat-hint>
         </mat-form-field>
       </div>
 

@@ -19,7 +19,7 @@ import org.mongojack.ObjectId;
 // check in CheckStyle so that we don't get a failed
 // build when Gradle runs CheckStyle.
 @SuppressWarnings({"VisibilityModifier"})
-public class Todos {
+public class Todo {
   // By default Java field names shouldn't start with underscores.
   // Here, though, we *have* to use the name `_id` to match the
   // name of the field in the database.
