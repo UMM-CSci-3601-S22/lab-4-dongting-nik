@@ -32,9 +32,10 @@ import umm3601.todos.Todos;
  */
 public class TodosController {
 
-  private static final String AGE_KEY = "age";
-  private static final String COMPANY_KEY = "company";
-  private static final String ROLE_KEY = "role";
+  private static final String OWNER_KEY = "owner";
+  private static final String STATUS_KEY  = "status";
+  private static final String BODY_KEY = "body";
+  private static final String CATEGORY_KEY = "category";
 
   public static final String EMAIL_REGEX = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$";
 
@@ -89,17 +90,12 @@ public class TodosController {
 
     List<Bson> filters = new ArrayList<>(); // start with a blank document
 
-    if (ctx.queryParamMap().containsKey(AGE_KEY)) {
-        int targetAge = ctx.queryParamAsClass(AGE_KEY, Integer.class).get();
-        filters.add(eq(AGE_KEY, targetAge));
+    if (ctx.queryParamMap().containsKey(STATUS_KEY)) {
+      filters.add(eq(STATUS_KEY, ctx.queryParam(STATUS_KEY)));
     }
 
-    if (ctx.queryParamMap().containsKey(COMPANY_KEY)) {
-      filters.add(regex(COMPANY_KEY,  Pattern.quote(ctx.queryParam(COMPANY_KEY)), "i"));
-    }
-
-    if (ctx.queryParamMap().containsKey(ROLE_KEY)) {
-      filters.add(eq(ROLE_KEY, ctx.queryParam(ROLE_KEY)));
+    if (ctx.queryParamMap().containsKey(OWNER_KEY)) {
+      filters.add(regex(OWNER_KEY,  Pattern.quote(ctx.queryParam(OWNER_KEY)), "i"));
     }
 
     // Sort the results. Use the `sortby` query param (default "name")
