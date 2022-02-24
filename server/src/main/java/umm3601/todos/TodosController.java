@@ -54,7 +54,7 @@ public class TodosController {
    *
    * @param ctx a Javalin HTTP context
    */
-  public void getTodos(Context ctx) {
+  public void getTodo(Context ctx) {
     String id = ctx.pathParam("id");
     Todos todos;
 
