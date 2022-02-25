@@ -21,6 +21,7 @@ import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 import org.mongojack.JacksonMongoCollection;
 
+import io.javalin.core.validation.Validator;
 import io.javalin.http.BadRequestResponse;
 import io.javalin.http.Context;
 import io.javalin.http.HttpCode;
@@ -90,11 +91,15 @@ public class TodoController {
     List<Bson> filters = new ArrayList<>(); // start with a blank document
 
     if (ctx.queryParamMap().containsKey(STATUS_KEY)) {
-      filters.add(eq(STATUS_KEY, ctx.queryParam(STATUS_KEY)));
+      Boolean status = ctx.queryParamAsClass(STATUS_KEY, Boolean.class).get();
+      filters.add(eq(STATUS_KEY, status));
     }
 
     if (ctx.queryParamMap().containsKey(OWNER_KEY)) {
-      filters.add(regex(OWNER_KEY,  Pattern.quote(ctx.queryParam(OWNER_KEY)), "i"));
+      String targetOwner = ctx.queryParam(OWNER_KEY);
+      Pattern pattern = Pattern.compile(Pattern.quote(targetOwner), Pattern.CASE_INSENSITIVE);
+      Bson ownerRegex = regex(OWNER_KEY, pattern);
+      filters.add(ownerRegex);
     }
 
     // Sort the results. Use the `sortby` query param (default "name")
