@@ -7,11 +7,11 @@ import { map } from 'rxjs/operators';
 
 /**
  * Service that provides the interface for getting information
- * about `Users` from the server.
+ * about `Todos` from the server.
  */
 @Injectable()
 export class TodoService {
-  // The URL for the users part of the server API.
+  // The URL for the todos part of the server API.
   readonly todoUrl: string = environment.apiUrl + 'todos';
 
   // The private `HttpClient` is *injected* into the service
@@ -25,17 +25,17 @@ export class TodoService {
   }
 
   /**
-   * Get all the users from the server, filtered by the information
+   * Get all the todos from the server, filtered by the information
    * in the `filters` map.
    *
-   * It would be more consistent with `UserListComponent` if this
+   * It would be more consistent with `TodoListComponent` if this
    * only supported filtering on age and role, and left company to
-   * just be in `filterUsers()` below. We've included it here, though,
+   * just be in `filterTodos()` below. We've included it here, though,
    * to provide some additional examples.
    *
    * @param filters a map that allows us to specify a target role, age,
    *  or company to filter by, or any combination of those
-   * @returns an `Observable` of an array of `Users`. Wrapping the array
+   * @returns an `Observable` of an array of `Todos`. Wrapping the array
    *  in an `Observable` means that other bits of of code can `subscribe` to
    *  the result (the `Observable`) and get the results that come back
    *  from the server after a possibly substantial delay (because we're
@@ -62,10 +62,10 @@ export class TodoService {
   }
 
   /**
-   * Get the `User` with the specified ID.
+   * Get the `Todo` with the specified ID.
    *
-   * @param id the ID of the desired user
-   * @returns an `Observable` containing the resulting user.
+   * @param id the ID of the desired Todo
+   * @returns an `Observable` containing the resulting Todo.
    */
   getTodoById(id: string): Observable<Todo> {
     return this.httpClient.get<Todo>(this.todoUrl + '/' + id);

@@ -1,5 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { MatCardModule } from '@angular/material/card';
+import { ActivatedRoute } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
+import { TodoCardComponent } from '../todo-card/todo-card.component';
 import { TodoProfileComponent } from './todo-profile.component';
 
 describe('TodoProfileComponent', () => {

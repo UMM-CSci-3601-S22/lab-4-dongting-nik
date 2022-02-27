@@ -21,7 +21,6 @@ import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 import org.mongojack.JacksonMongoCollection;
 
-import io.javalin.core.validation.Validator;
 import io.javalin.http.BadRequestResponse;
 import io.javalin.http.Context;
 import io.javalin.http.HttpCode;
@@ -34,10 +33,6 @@ public class TodoController {
 
   private static final String OWNER_KEY = "owner";
   private static final String STATUS_KEY  = "status";
-  private static final String BODY_KEY = "body";
-  private static final String CATEGORY_KEY = "category";
-
-  public static final String EMAIL_REGEX = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$";
 
   private final JacksonMongoCollection<Todo> todosCollection;
 

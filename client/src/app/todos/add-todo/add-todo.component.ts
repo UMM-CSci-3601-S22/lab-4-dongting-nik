@@ -16,7 +16,7 @@ export class AddTodoComponent implements OnInit {
 
   todo: Todo;
 
-    // not sure if this name is magical and making it be found or if I'm missing something,
+  // not sure if this name is magical and making it be found or if I'm missing something,
   // but this is where the red text that shows up (when there is invalid input) comes from
   addTodoValidationMessages = {
     owner: [
@@ -54,14 +54,21 @@ export class AddTodoComponent implements OnInit {
       owner: new FormControl('', Validators.compose([
         Validators.required,
         Validators.minLength(2),
-        Validators.maxLength(100)
+        Validators.maxLength(100),
+        (fc) => {
+          if (fc.value.toLowerCase() === 'abc123' || fc.value.toLowerCase() === '123abc') {
+            return ({existingOwner: true});
+          } else {
+            return null;
+          }
+        },
       ])),
 
       // We don't need a special validator just for our app here, but there is a default one for email.
       // We will require the email, though.
       status: new FormControl('', Validators.compose([
         Validators.required,
-        Validators.pattern('^(complete|incomplete)$'),
+        Validators.pattern('^(true|false)+$'),
       ])),
 
       body: new FormControl('', Validators.compose([

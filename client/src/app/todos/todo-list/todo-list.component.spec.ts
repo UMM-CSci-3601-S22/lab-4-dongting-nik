@@ -15,7 +15,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Observable } from 'rxjs';
-import { MockTodoService } from '../../../testing/todo.service.mock';
+import { MockTodoService } from '../../testing/todo.service.mock';
 import { TodoCardComponent } from '../todo-card/todo-card.component';
 import { TodoListComponent } from './todo-list.component';
 import { TodoService } from '../todo.service';

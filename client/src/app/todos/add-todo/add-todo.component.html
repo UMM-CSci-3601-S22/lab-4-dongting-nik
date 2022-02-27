@@ -11,11 +11,11 @@ is potentially helpful and contributed to the shaping of this example -->
         <mat-card-content fxLayout="column">
           <mat-form-field>
             <mat-label>Owner</mat-label>
-            <input matInput placeholder="Owner" formControlName="owner"
-                  required>
+            <input matInput placeholder="Owner"
+                  formControlName="owner" required>
             <mat-error *ngFor="let validation of addTodoValidationMessages.owner">
               <mat-error class="error-message" data-test="ownerError"
-                        *ngIf="addTodoForm.get('owner').hasError(validation.type) && (addTodoForm.get('owner').dirty || addTodoForm.get('name').touched)">
+                        *ngIf="addTodoForm.get('owner').hasError(validation.type) && (addTodoForm.get('owner').dirty || addTodoForm.get('owner').touched)">
                 {{validation.message}}
               </mat-error>
             </mat-error>
@@ -35,7 +35,7 @@ is potentially helpful and contributed to the shaping of this example -->
 
           <mat-form-field>
             <mat-label>Body</mat-label>
-            <input matInput placeholder="Body"
+            <input matInput placeholder="Body"r
                   formControlName="body" required>
             <mat-error *ngFor="let validation of addTodoValidationMessages.body">
               <mat-error class="error-message" data-test='bodyError'
