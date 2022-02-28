@@ -4,7 +4,7 @@ import { Todo } from '../app/todos/todo-list/todo';
 import { TodoService } from '../app/todos/todo.service';
 
 /**
- * A "mock" version of the `UserService` that can be used to test components
+ * A "mock" version of the `TodoService` that can be used to test components
  * without having to create an actual service.
  */
 // It needs to be `Injectable` since that's how services are typically
@@ -39,7 +39,7 @@ export class MockTodoService extends TodoService {
     super(null);
   }
 
-  getUsers(filters: { owner?: string; category?: string; body?: string }): Observable<Todo[]> {
+  getTodos(filters: { owner?: string; category?: string; body?: string }): Observable<Todo[]> {
     // Our goal here isn't to test (and thus rewrite) the service, so we'll
     // keep it simple and just return the test users regardless of what
     // filters are passed in.

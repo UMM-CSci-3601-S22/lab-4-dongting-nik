@@ -18,7 +18,7 @@ describe('AppComponent', () => {
         MatIconModule,
         MatSidenavModule,
         MatCardModule,
-        MatListModule
+        MatListModule,
       ],
       declarations: [
         AppComponent
