@@ -55,13 +55,6 @@ export class AddTodoComponent implements OnInit {
         Validators.required,
         Validators.minLength(2),
         Validators.maxLength(100),
-        (fc) => {
-          if (fc.value.toLowerCase() === 'abc123' || fc.value.toLowerCase() === '123abc') {
-            return ({existingOwner: true});
-          } else {
-            return null;
-          }
-        },
       ])),
 
       // We don't need a special validator just for our app here, but there is a default one for email.

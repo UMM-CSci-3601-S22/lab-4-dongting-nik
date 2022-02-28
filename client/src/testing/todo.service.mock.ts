@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { Todo } from '../app/todos';
+import { Todo } from '../app/todos/todo-list/todo';
 import { TodoService } from '../app/todos/todo.service';
 
 /**
@@ -11,31 +11,27 @@ import { TodoService } from '../app/todos/todo.service';
 // provided to components.
 @Injectable()
 export class MockTodoService extends TodoService {
-  static testUsers: Todo[] = [
+  static testTodos: Todo[] = [
     {
-      _id: 'chris_id',
-      owner: 'Chris',
-      category: 'homework',
-      body: 'Ipsum esse est ullamco magna',
-      status: 'complete',
+      _id: 'testOne_id',
+      owner: 'TestOne',
+      status: true,
+      body: 'This is the test one',
+      category: 'test one'
     },
     {
-      _id: 'pat_id',
-      name: 'Pat',
-      age: 37,
-      company: 'IBM',
-      email: 'pat@something.com',
-      role: 'editor',
-      avatar: 'https://gravatar.com/avatar/b42a11826c3bde672bce7e06ad729d44?d=identicon'
+      _id: 'testTwo_id',
+      owner: 'TestTwo',
+      status: true,
+      body: 'This is the test two',
+      category: 'test two'
     },
     {
-      _id: 'jamie_id',
-      name: 'Jamie',
-      age: 37,
-      company: 'Frogs, Inc.',
-      email: 'jamie@frogs.com',
-      role: 'viewer',
-      avatar: 'https://gravatar.com/avatar/d4a6c71dd9470ad4cf58f78c100258bf?d=identicon'
+      _id: 'testThree_id',
+      owner: 'TestThree',
+      status: false,
+      body: 'This is the test three',
+      category: 'test three'
     }
   ];
 
@@ -53,12 +49,12 @@ export class MockTodoService extends TodoService {
     return of(MockTodoService.testTodos);
   }
 
-  getUserById(id: string): Observable<User> {
+  getTodoById(id: string): Observable<Todo> {
     // If the specified ID is for the first test user,
     // return that user, otherwise return `null` so
     // we can test illegal user requests.
-    if (id === MockUserService.testUsers[0]._id) {
-      return of(MockUserService.testUsers[0]);
+    if (id === MockTodoService.testTodos[0]._id) {
+      return of(MockTodoService.testTodos[0]);
     } else {
       return of(null);
     }

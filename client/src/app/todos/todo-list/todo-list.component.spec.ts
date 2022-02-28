@@ -15,7 +15,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Observable } from 'rxjs';
-import { MockTodoService } from '../../testing/todo.service.mock';
+import { MockTodoService } from '../../../testing/todo.service.mock';
 import { TodoCardComponent } from '../todo-card/todo-card.component';
 import { TodoListComponent } from './todo-list.component';
 import { TodoService } from '../todo.service';
@@ -64,18 +64,21 @@ describe('TodoListComponent', () => {
     expect(todoList.serverFilteredTodos.length).toBe(3);
   });
 
-  it('contains a todo owned by "Chris"', () => {
-    expect(todoList.serverFilteredTodos.some((todo: Todo) => todo.owner === 'Chris')).toBe(true);
+  it('contains a todo with category "test one"', () => {
+    expect(todoList.serverFilteredTodos.some((todo: Todo) => todo.category === 'test one')).toBe(true);
   });
 
-  it('contains a todo owned by "Jamie"', () => {
-    expect(todoList.serverFilteredTodos.some((todo: Todo) => todo.owner === 'Jamie')).toBe(true);
+  it('contains a todo with category "test two"', () => {
+    expect(todoList.serverFilteredTodos.some((todo: Todo) => todo.category === 'test two')).toBe(true);
   });
 
-  it('doesn\'t contain a todo owned by "Bobby"', () => {
-    expect(todoList.serverFilteredTodos.some((todo: Todo) => todo.owner === 'Bobby')).toBe(false);
+  it('doesn\'t contain a todo with category "test none"', () => {
+    expect(todoList.serverFilteredTodos.some((todo: Todo) => todo.category === 'test none')).toBe(false);
   });
 
+  it('has two todos that are complete',() => {
+    expect(todoList.serverFilteredTodos.filter((todo: Todo) => todo.status === true).length).toBe(2);
+  });
 });
 
 describe('Misbehaving Todo List', () => {
