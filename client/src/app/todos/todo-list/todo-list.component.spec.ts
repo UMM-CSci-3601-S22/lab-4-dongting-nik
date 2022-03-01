@@ -20,6 +20,7 @@ import { TodoCardComponent } from '../todo-card/todo-card.component';
 import { TodoListComponent } from './todo-list.component';
 import { TodoService } from '../todo.service';
 import { Todo } from './todo';
+import { MatIconModule } from '@angular/material/icon';
 
 
 const COMMON_IMPORTS: any[] = [
@@ -38,6 +39,7 @@ const COMMON_IMPORTS: any[] = [
   MatSnackBarModule,
   BrowserAnimationsModule,
   RouterTestingModule,
+  MatIconModule
 ];
 
 let todoList: TodoListComponent;

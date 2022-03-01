@@ -70,9 +70,6 @@ public class Server {
     // of the HTTP request
     server.post("/api/users", userController::addNewUser);
 
-    // List users, filtered using query parameters
-    server.get("/api/todos", todoController::getTodos);
-
     // Get the specified user
     server.get("/api/todos/{id}", todoController::getTodo);
 

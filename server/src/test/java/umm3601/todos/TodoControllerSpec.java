@@ -201,64 +201,33 @@ public class TodoControllerSpec {
     }
   }
 
-  /**
-  * Test that if the todo sends a request with an illegal value in
-  * the age field (i.e., something that can't be parsed to a number)
-  * we get a reasonable error code back.
-  */
   @Test
-  public void respondsAppropriatelyToIllegalStatus() {
+  public void canGetTodosWithCategoryAndBody() throws IOException {
 
-    mockReq.setQueryString("status=whatever");
+    // Set the query string to test with
+    mockReq.setQueryString("category=test two&body=This is the test two");
+
+    // Create our fake Javalin context
     Context ctx = mockContext("api/todos");
 
-    // This should now throw a `ValidationException` because
-    // our request has an age that can't be parsed to a number.
-    assertThrows(ValidationException.class, () -> {
-      todoController.getTodos(ctx);
-    });
-  }
-
-  @Test
-  public void canGetTodosWithBody() throws IOException {
-
-    mockReq.setQueryString("body=This is the test one");
-    Context ctx = mockContext("api/todos");
     todoController.getTodos(ctx);
 
     assertEquals(HttpCode.OK.getStatus(), mockRes.getStatus());
-    String result = ctx.resultString();
 
+    String result = ctx.resultString();
     Todo[] resultTodos = javalinJackson.fromJsonString(result, Todo[].class);
 
-    assertEquals(1, resultTodos.length); // There should be one todos returned
+    assertEquals(1, resultTodos.length); // There should be one todo returned
     for (Todo todo : resultTodos) {
-      assertEquals("This is the test one", todo.body);
-    }
-  }
-
-  @Test
-  public void canGetTodosWithCategory() throws IOException {
-
-    mockReq.setQueryString("category=test two");
-    Context ctx = mockContext("api/todos");
-    todoController.getTodos(ctx);
-
-    assertEquals(HttpCode.OK.getStatus(), mockRes.getStatus());
-    String result = ctx.resultString();
-
-    Todo[] resultTodos = javalinJackson.fromJsonString(result, Todo[].class);
-
-    assertEquals(1, resultTodos.length); // There should be one todos returned
-    for (Todo todo : javalinJackson.fromJsonString(result, Todo[].class)) {
       assertEquals("test two", todo.category);
+      assertEquals("This is the test two", todo.body);
     }
   }
 
   @Test
-  public void canGetTodosWithGivenStatusAndCategory() throws IOException {
+  public void canGetTodosWithGivenOwnerAndStatus() throws IOException {
 
-    mockReq.setQueryString("status=true&category=test two");
+    mockReq.setQueryString("owner=TestOne&status=true");
     Context ctx = mockContext("api/todos");
     todoController.getTodos(ctx);
 
@@ -268,8 +237,8 @@ public class TodoControllerSpec {
 
     assertEquals(1, resultTodos.length); // There should be one todo returned
     for (Todo todo : resultTodos) {
+      assertEquals("TestOne", todo.owner);
       assertEquals(true, todo.status);
-      assertEquals("test two", todo.category);
     }
   }
 
@@ -344,7 +313,7 @@ public class TodoControllerSpec {
   }
 
   @Test
-  public void respondsAppropriateToAddingTodoWithMissingOwnerName() throws IOException {
+  public void respondsAppropriateToAddingTodoWithMissingOwner() throws IOException {
 
     String testNewTodo = "{"
       + "\"status\": false,"
@@ -362,7 +331,7 @@ public class TodoControllerSpec {
   }
 
   @Test
-  public void respondsAppropriateToAddingTodoWithEmptyOwnerName() throws IOException {
+  public void respondsAppropriateToAddingTodoWithEmptyOwner() throws IOException {
 
     String testNewTodo = "{"
       + "\"owner\": \"\","
@@ -384,10 +353,29 @@ public class TodoControllerSpec {
   public void respondsAppropriateToAddingTodoWithMissingStatus() throws IOException {
 
     String testNewTodo = "{"
-      + "\"owner\": \"TestNone\","
-      + "\"body\": \"This test should error\","
-      + "\"category\": \"test none\""
-      + "}";
+    + "\"owner\": \"TestNone\","
+    + "\"body\": \"This test should error\","
+    + "\"category\": \"test none\""
+    + "}";
+
+    mockReq.setBodyContent(testNewTodo);
+    mockReq.setMethod("POST");
+    Context ctx = mockContext("api/todos");
+
+    assertThrows(ValidationException.class, () -> {
+      todoController.addNewTodo(ctx);
+    });
+  }
+
+  @Test
+  public void respondsAppropriateToAddingTodoWithEmptyStatus() throws IOException {
+
+    String testNewTodo = "{"
+    + "\"owner\": \"TestNone\","
+    + "\"status\": ,"
+    + "\"body\": \"This test should error\","
+    + "\"category\": \"test none\""
+    + "}";
 
     mockReq.setBodyContent(testNewTodo);
     mockReq.setMethod("POST");
@@ -460,7 +448,7 @@ public class TodoControllerSpec {
     String testNewTodo = "{"
       + "\"owner\": \"TestNone\","
       + "\"status\": true,"
-      + "\"body\": \"This test should error\","
+      + "\"body\": \"This test should error\""
       + "}";
 
     mockReq.setBodyContent(testNewTodo);

@@ -8,6 +8,7 @@ import { Todo } from '../todo-list/todo';
 import { TodoCardComponent } from '../todo-card/todo-card.component';
 import { TodoProfileComponent } from '../todo-profile/todo-profile.component';
 import { TodoService } from '../todo.service';
+import { MatIconModule } from '@angular/material/icon';
 
 describe('TodoProfileComponent', () => {
   let component: TodoProfileComponent;
@@ -18,7 +19,8 @@ describe('TodoProfileComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         RouterTestingModule,
-        MatCardModule
+        MatCardModule,
+        MatIconModule
       ],
       declarations: [TodoProfileComponent, TodoCardComponent],
       providers: [

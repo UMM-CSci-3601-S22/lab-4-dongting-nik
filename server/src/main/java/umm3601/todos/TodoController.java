@@ -4,9 +4,6 @@ import static com.mongodb.client.model.Filters.and;
 import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Filters.regex;
 
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -33,6 +30,8 @@ public class TodoController {
 
   private static final String OWNER_KEY = "owner";
   private static final String STATUS_KEY  = "status";
+  private static final String CATEGORY_KEY  = "category";
+  private static final String BODY_KEY  = "body";
 
   private final JacksonMongoCollection<Todo> todosCollection;
 
@@ -97,6 +96,20 @@ public class TodoController {
       filters.add(ownerRegex);
     }
 
+    if (ctx.queryParamMap().containsKey(CATEGORY_KEY)) {
+      String targetCategory = ctx.queryParam(CATEGORY_KEY);
+      Pattern pattern = Pattern.compile(Pattern.quote(targetCategory), Pattern.CASE_INSENSITIVE);
+      Bson categoryRegex = regex(CATEGORY_KEY, pattern);
+      filters.add(categoryRegex);
+    }
+
+    if (ctx.queryParamMap().containsKey(BODY_KEY)) {
+      String targetBody = ctx.queryParam(BODY_KEY);
+      Pattern pattern = Pattern.compile(Pattern.quote(targetBody), Pattern.CASE_INSENSITIVE);
+      Bson bodyRegex = regex(BODY_KEY, pattern);
+      filters.add(bodyRegex);
+    }
+
     // Sort the results. Use the `sortby` query param (default "name")
     // as the field to sort by, and the query param `sortorder` (default
     // "asc") to specify the sort order.
@@ -115,34 +128,19 @@ public class TodoController {
    */
   public void addNewTodo(Context ctx) {
     Todo newTodos = ctx.bodyValidator(Todo.class)
-       // Verify that the todos has a owner that is not blank
-      .check(usr -> usr.owner != null && usr.owner.length() > 0, "Todos must have a non-empty owner")
+      // Verify that the todos has a owner that is not blank
+      .check(todo -> todo.owner != null && todo.owner.length() > 0, "Todos must have a non-empty owner")
+      // Verify that the todos has a not error status
+      .check(todo -> Boolean.valueOf(todo.status), "Todo must have a correct todo status")
       // Verify that the todo have a body that is not blank
-      .check(usr -> usr.body != null && usr.body.length() > 0, "Todos must have a non-empty body")
+      .check(todo -> todo.body != null && todo.body.length() > 0, "Todos must have a non-empty body")
       // Verify that the todo have a category that is not blank
-      .check(usr -> usr.category!= null && usr.category.length() > 0, "Todos must have a non-empty category")
+      .check(todo -> todo.category!= null && todo.category.length() > 0, "Todos must have a non-empty category")
       .get();
 
     todosCollection.insertOne(newTodos);
     ctx.status(HttpCode.OK);
     ctx.json(Map.of("id", newTodos._id));
-  }
-
-  /**
-   * Utility function to generate the md5 hash for a given string
-   *
-   * @param str the string to generate a md5 for
-   */
-  @SuppressWarnings("lgtm[java/weak-cryptographic-algorithm]")
-  public String md5(String str) throws NoSuchAlgorithmException {
-    MessageDigest md = MessageDigest.getInstance("MD5");
-    byte[] hashInBytes = md.digest(str.toLowerCase().getBytes(StandardCharsets.UTF_8));
-
-    StringBuilder result = new StringBuilder();
-    for (byte b : hashInBytes) {
-      result.append(String.format("%02x", b));
-    }
-    return result.toString();
   }
 }
 

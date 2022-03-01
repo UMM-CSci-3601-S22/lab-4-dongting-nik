@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { TodoCardComponent } from './todo-card.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
 
 describe('TodoCardComponent', () => {
   let component: TodoCardComponent;
@@ -11,7 +12,8 @@ describe('TodoCardComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         BrowserAnimationsModule,
-        MatCardModule
+        MatCardModule,
+        MatIconModule
       ],
       declarations: [ TodoCardComponent ]
     })

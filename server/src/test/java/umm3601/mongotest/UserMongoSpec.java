@@ -56,7 +56,7 @@ import org.junit.jupiter.api.Test;
 // also a lot of "magic strings" that Checkstyle doesn't actually
 // flag as a problem) make more sense.
 @SuppressWarnings({ "MagicNumber" })
-public class MongoSpec {
+public class UserMongoSpec {
 
   private MongoCollection<Document> userDocuments;
 

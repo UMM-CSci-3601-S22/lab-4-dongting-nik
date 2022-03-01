@@ -10,6 +10,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { MockTodoService } from 'src/testing/todo.service.mock';
 import { AddTodoComponent } from './add-todo.component';
 import { TodoService } from '../todo.service';
+import { MatIconModule } from '@angular/material/icon';
 
 describe('AddTodoComponent', () => {
   let addTodoComponent: AddTodoComponent;
@@ -21,6 +22,7 @@ describe('AddTodoComponent', () => {
       imports: [
         FormsModule,
         ReactiveFormsModule,
+        MatIconModule,
         MatSnackBarModule,
         MatCardModule,
         MatFormFieldModule,
