@@ -39,26 +39,35 @@ describe('Todo list', () => {
 
     // All of the todo cards should have the body we are filtering by
     page.getTodoCards().each(card => {
-      cy.wrap(card).find('.todo-card-body').should('contain.text', 'Ipsum esse est ullamco magna');
+      cy.wrap(card).find('.todo-card-owner').should('have.text', 'Fry');
     });
+
+    page.clickViewProfile(page.getTodoCards().first());
+
+    // All of the todo cards should have the body we are filtering by
+    cy.get('.todo-card-body').first().should('contain.text', 'Ipsum esse est ullamco magna');
   });
 
   it('Should type something partial in the body filter and check that it returned correct elements', () => {
-    // Filter for body that contain 'esse'
-    cy.get('#todo-body-input').type('esse');
+    // Filter for body that contain 'esse est dolore'
+    cy.get('#todo-body-input').type('esse est dolore');
 
     page.getTodoCards().should('have.lengthOf.above', 0);
 
-    // Go through each of the cards that are being shown and get the companies
     page.getTodoCards().each(card => {
-      cy.wrap(card).find('.todo-card-body')
+      cy.wrap(card).find('.todo-card-owner').should('have.text', 'Blanche');
+    });
+
+    page.clickViewProfile(page.getTodoCards().first());
+
+    // Go through each of the cards that are being shown and get the companies
+    cy.get('.todo-card-body').first()
       // We should see these body keywords
-      .should('contain.text', 'Ipsum')
-      .should('contain.text', 'officia')
+      .should('contain.text', 'non nulla')
+      .should('contain.text', 'aliquip')
       // We shouldn't see these body keywords
       .should('not.contain.text', 'NOTEXIST')
       .should('not.contain.text', 'IMPOSSIBLETOHAVETHIS');
-    });
   });
 
   it('Should type something in the category filter and check that it returned correct elements', () => {
@@ -66,10 +75,10 @@ describe('Todo list', () => {
 
     page.getTodoCards().should('have.lengthOf.above', 0);
 
+    page.clickViewProfile(page.getTodoCards().first());
+
     // All of the todo cards should have the category we are filtering by
-    page.getTodoCards().each(card => {
-      cy.wrap(card).find('.todo-card-category').should('have.text', 'software design');
-    });
+    cy.get('.todo-card-category').first().should('have.text', 'software design');
   });
 
   it('Should type something partial in the category filter and check that it returned correct elements', () => {
@@ -78,16 +87,16 @@ describe('Todo list', () => {
 
     page.getTodoCards().should('have.lengthOf.above', 0);
 
+    page.clickViewProfile(page.getTodoCards().first());
+
     // Go through each of the cards that are being shown and get the categories
-    page.getTodoCards().each(card => {
-      cy.wrap(card).find('.todo-card-category')
+    cy.get('.todo-card-category').first()
       // We should see these keywords
       .should('contain.text', 'video')
       .should('contain.text', 'games')
       // We shouldn't see these keywords
       .should('not.contain.text', 'homework')
       .should('not.contain.text', 'software');
-    });
   });
 
 
@@ -110,7 +119,7 @@ describe('Todo list', () => {
   });
 
   it('Should select a status, switch the view, and check that it returned correct elements', () => {
-    // Filter for status 'viewer');
+    // Filter for status 'complete');
     page.selectStatus('complete');
 
     // Choose the view type "List"
@@ -128,7 +137,7 @@ describe('Todo list', () => {
   it('Should click view profile on a todo and go to the right URL', () => {
     page.getTodoCards().first().then((card) => {
       const firstTodoOwner = card.find('.todo-card-owner').text();
-      const firstTodoCategory = card.find('.todo-card-category').text();
+      const firstTodoStatus = card.find('.todo-card-status').text();
 
       // When the view profile button on the first todo card is clicked, the URL should have a valid mongo ID
       page.clickViewProfile(page.getTodoCards().first());
@@ -138,7 +147,7 @@ describe('Todo list', () => {
 
       // On this profile page we were sent to, the owner and category should be correct
       cy.get('.todo-card-owner').first().should('have.text', firstTodoOwner);
-      cy.get('.todo-card-category').first().should('have.text', firstTodoCategory);
+      cy.get('.todo-card-status').first().should('have.text', firstTodoStatus);
     });
   });
 
