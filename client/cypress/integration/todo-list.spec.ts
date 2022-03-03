@@ -38,8 +38,8 @@ describe('Todo list', () => {
     page.getTodoCards().should('have.lengthOf.above', 0);
 
     // All of the todo cards should have the body we are filtering by
-    page.getTodoCards().find('.todo-card-body').each(card => {
-      cy.wrap(card).should('contain.text', 'Ipsum esse est ullamco magna');
+    page.getTodoCards().each(card => {
+      cy.wrap(card).find('.todo-card-body').should('contain.text', 'Ipsum esse est ullamco magna');
     });
   });
 
@@ -50,13 +50,15 @@ describe('Todo list', () => {
     page.getTodoCards().should('have.lengthOf.above', 0);
 
     // Go through each of the cards that are being shown and get the companies
-    page.getTodoCards().find('.todo-card-body')
+    page.getTodoCards().each(card => {
+      cy.wrap(card).find('.todo-card-body')
       // We should see these body keywords
       .should('contain.text', 'Ipsum')
       .should('contain.text', 'officia')
       // We shouldn't see these body keywords
       .should('not.contain.text', 'NOTEXIST')
       .should('not.contain.text', 'IMPOSSIBLETOHAVETHIS');
+    });
   });
 
   it('Should type something in the category filter and check that it returned correct elements', () => {
@@ -65,8 +67,8 @@ describe('Todo list', () => {
     page.getTodoCards().should('have.lengthOf.above', 0);
 
     // All of the todo cards should have the category we are filtering by
-    page.getTodoCards().find('.todo-card-category').each(card => {
-      cy.wrap(card).should('have.text', 'software design');
+    page.getTodoCards().each(card => {
+      cy.wrap(card).find('.todo-card-category').should('have.text', 'software design');
     });
   });
 
@@ -77,13 +79,15 @@ describe('Todo list', () => {
     page.getTodoCards().should('have.lengthOf.above', 0);
 
     // Go through each of the cards that are being shown and get the categories
-    page.getTodoCards().find('.todo-card-category')
+    page.getTodoCards().each(card => {
+      cy.wrap(card).find('.todo-card-category')
       // We should see these keywords
       .should('contain.text', 'video')
       .should('contain.text', 'games')
       // We shouldn't see these keywords
       .should('not.contain.text', 'homework')
       .should('not.contain.text', 'software');
+    });
   });
 
 

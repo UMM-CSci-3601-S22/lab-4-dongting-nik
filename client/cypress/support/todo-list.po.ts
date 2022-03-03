@@ -5,6 +5,10 @@ export class TodoListPage {
     return cy.visit('/todos');
   }
 
+  getUrl() {
+    return cy.url();
+  }
+
   getTodoTitle() {
     return cy.get('.todo-list-title');
   }
