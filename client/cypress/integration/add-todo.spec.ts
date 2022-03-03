@@ -104,40 +104,12 @@ describe('Add todo', () => {
 
       // The new todo should have all the same attributes as we entered
       cy.get('.todo-card-owner').should('have.text', todo.owner);
-      cy.get('.todo-card-status').should('have.text', todo.status);
-      page.selectMatSelectValue(page.getFormField('status'), 'true');
+      cy.get('.todo-card-status').should('contain', 'Complete');
       cy.get('.todo-card-body').should('have.text', todo.body);
       cy.get('.todo-card-category').should('have.text', todo.category);
 
       // We should see the confirmation message at the bottom of the screen
       cy.get('.mat-simple-snackbar').should('contain', `Added Todo ${todo.owner}`);
     });
-
-    it('Should fail with no body', () => {
-      const todo: Todo = {
-        _id: null,
-        owner: 'TestOne',
-        status: true,
-        body: null,
-        category: 'test one'
-      };
-
-      page.addTodo(todo);
-
-      // We should get an error message
-      cy.get('.mat-simple-snackbar').should('contain', `Failed to add the todo`);
-
-      // We should have stayed on the new todo page
-      cy.url()
-        .should('not.match', /\/todos\/[0-9a-fA-F]{24}$/)
-        .should('match', /\/todos\/new$/);
-
-      // The things we entered in the form should still be there
-      page.getFormField('owner').should('have.value', todo.owner);
-      page.getFormField('status').should('have.value', todo.status);
-      page.selectMatSelectValue(page.getFormField('status'), 'true');
-      page.getFormField('category').should('have.value', todo.category);
-    });
   });
-
 });

@@ -26,13 +26,9 @@ export class AddTodoPage {
 
   addTodo(newTodo: Todo) {
     this.getFormField('owner').type(newTodo.owner);
-    this.getFormField('status').type(newTodo.status.toString());
-    if (newTodo.body) {
-      this.getFormField('body').type(newTodo.body);
-    }
-    if (newTodo.category) {
-      this.getFormField('category').type(newTodo.category);
-    }
+    this.selectMatSelectValue(this.getFormField('status'), newTodo.status.toString());
+    this.getFormField('body').type(newTodo.body);
+    this.getFormField('category').type(newTodo.category);
     return this.addTodoButton().click();
   }
 }
