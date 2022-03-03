@@ -9,7 +9,7 @@ describe('Add todo', () => {
   });
 
   it('Should have the correct title', () => {
-    page.getTitle().should('have.text', 'New Todo');
+    page.getTodoTitle().should('have.text', 'New Todo');
   });
 
   it('Should enable and disable the add todo button', () => {

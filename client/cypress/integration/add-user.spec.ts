@@ -9,7 +9,7 @@ describe('Add user', () => {
   });
 
   it('Should have the correct title', () => {
-    page.getTitle().should('have.text', 'New User');
+    page.getUserTitle().should('have.text', 'New User');
   });
 
   it('Should enable and disable the add user button', () => {

@@ -5,7 +5,7 @@ export class AddTodoPage {
     return cy.visit('/todos/new');
   }
 
-  getTitle() {
+  getTodoTitle() {
     return cy.get('.add-todo-title');
   }
 
