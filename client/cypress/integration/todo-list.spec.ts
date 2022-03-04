@@ -120,7 +120,7 @@ describe('Todo list', () => {
 
   it('Should select a status, switch the view, and check that it returned correct elements', () => {
     // Filter for status 'complete');
-    page.selectStatus('complete');
+    page.selectStatus('true');
 
     // Choose the view type "List"
     page.changeView('list');
