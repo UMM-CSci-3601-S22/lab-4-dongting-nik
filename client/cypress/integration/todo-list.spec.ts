@@ -120,7 +120,7 @@ describe('Todo list', () => {
 
   it('Should select a status, switch the view, and check that it returned correct elements', () => {
     // Filter for status 'complete');
-    page.selectStatus('true');
+    page.selectStatus('complete');
 
     // Choose the view type "List"
     page.changeView('list');
@@ -130,7 +130,7 @@ describe('Todo list', () => {
 
     // All of the todo list items that show should have the status we are looking for
     page.getTodoListItems().each(el => {
-      cy.wrap(el).find('.todo-list-status').should('contain', 'complete');
+      cy.wrap(el).find('.todo-list-status').should('contain.text', 'true');
     });
   });
 

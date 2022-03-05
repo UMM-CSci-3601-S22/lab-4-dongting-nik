@@ -135,5 +135,4 @@ describe('Add user', () => {
       page.getFormField('role').should('contain', 'Editor');
     });
   });
-
 });
