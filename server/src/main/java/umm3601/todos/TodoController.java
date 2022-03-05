@@ -135,7 +135,7 @@ public class TodoController {
       // Verify that the todo have a body that is not blank
       .check(todo -> todo.body != null && todo.body.length() > 0, "Todos must have a non-empty body")
       // Verify that the todo have a category that is not blank
-      .check(todo -> todo.category!= null && todo.category.length() > 0, "Todos must have a non-empty category")
+      .check(todo -> todo.category != null && todo.category.length() > 0, "Todos must have a non-empty category")
       .get();
 
     todosCollection.insertOne(newTodos);
