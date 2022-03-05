@@ -42,7 +42,7 @@ describe('User service: ', () => {
   let httpClient: HttpClient;
   let httpTestingController: HttpTestingController;
 
-  beforeEach(() => {
+  beforeEach(() =>  {
     // Set up the mock handling of the HTTP requests
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule]

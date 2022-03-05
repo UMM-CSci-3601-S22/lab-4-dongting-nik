@@ -32,6 +32,11 @@ import { UserCardComponent } from './users/user-card.component';
 import { UserListComponent } from './users/user-list.component';
 import { UserProfileComponent } from './users/user-profile.component';
 import { UserService } from './users/user.service';
+import { AddTodoComponent } from './todos/add-todo/add-todo.component';
+import { TodoCardComponent } from './todos/todo-card/todo-card.component';
+import { TodoListComponent } from './todos/todo-list/todo-list.component';
+import { TodoProfileComponent } from './todos/todo-profile/todo-profile.component';
+import { TodoService } from './todos/todo.service';
 
 const MATERIAL_MODULES: any[] = [
   MatListModule,
@@ -49,7 +54,7 @@ const MATERIAL_MODULES: any[] = [
   MatFormFieldModule,
   MatDividerModule,
   MatRadioModule,
-  MatSnackBarModule
+  MatSnackBarModule,
 ];
 
 @NgModule({
@@ -60,6 +65,10 @@ const MATERIAL_MODULES: any[] = [
     UserCardComponent,
     UserProfileComponent,
     AddUserComponent,
+    TodoListComponent,
+    TodoCardComponent,
+    TodoProfileComponent,
+    AddTodoComponent,
   ],
   imports: [
     BrowserModule,
@@ -73,7 +82,8 @@ const MATERIAL_MODULES: any[] = [
     LayoutModule,
   ],
   providers: [
-    UserService
+    UserService,
+    TodoService
   ],
   bootstrap: [AppComponent]
 })

@@ -16,7 +16,7 @@ export class AddUserComponent implements OnInit {
 
   user: User;
 
-    // not sure if this name is magical and making it be found or if I'm missing something,
+  // not sure if this name is magical and making it be found or if I'm missing something,
   // but this is where the red text that shows up (when there is invalid input) comes from
   addUserValidationMessages = {
     name: [

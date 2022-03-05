@@ -5,7 +5,7 @@ export class AddUserPage {
     return cy.visit('/users/new');
   }
 
-  getTitle() {
+  getUserTitle() {
     return cy.get('.add-user-title');
   }
 

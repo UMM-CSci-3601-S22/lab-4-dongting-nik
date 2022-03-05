@@ -5,6 +5,10 @@ export class UserListPage {
     return cy.visit('/users');
   }
 
+  getUserTitle() {
+    return cy.get('.user-list-title');
+  }
+
   getUserCards() {
     return cy.get('.user-cards-container app-user-card');
   }
